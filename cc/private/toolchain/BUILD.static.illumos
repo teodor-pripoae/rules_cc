@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This becomes the BUILD file for @local_config_cc// under Illumos.
+# This becomes the BUILD file for @local_config_cc// under FreeBSD.
 
 package(default_visibility = ["//visibility:public"])
 
@@ -34,13 +34,13 @@ cc_toolchain_suite(
     toolchains = {
         "armeabi-v7a": ":cc-compiler-armeabi-v7a",
         "armeabi-v7a|compiler": ":cc-compiler-armeabi-v7a",
-        "illumos": ":cc-compiler-illumos",
-        "illumos|compiler": ":cc-compiler-illumos",
+        "freebsd": ":cc-compiler-freebsd",
+        "freebsd|compiler": ":cc-compiler-freebsd",
     },
 )
 
 cc_toolchain(
-    name = "cc-compiler-illumos",
+    name = "cc-compiler-freebsd",
     all_files = ":empty",
     ar_files = ":empty",
     as_files = ":empty",
@@ -50,26 +50,26 @@ cc_toolchain(
     objcopy_files = ":empty",
     strip_files = ":empty",
     supports_param_files = 0,
-    toolchain_config = ":local_illumos",
-    toolchain_identifier = "local_illumos",
+    toolchain_config = ":local_freebsd",
+    toolchain_identifier = "local_freebsd",
 )
 
 cc_toolchain_config(
-    name = "local_illumos",
-    cpu = "illumos",
+    name = "local_freebsd",
+    cpu = "freebsd",
 )
 
 toolchain(
-    name = "cc-toolchain-illumos",
+    name = "cc-toolchain-freebsd",
     exec_compatible_with = [
         "@platforms//cpu:x86_64",
-        "@platforms//os:illumos",
+        "@platforms//os:freebsd",
     ],
     target_compatible_with = [
         "@platforms//cpu:x86_64",
-        "@platforms//os:illumos",
+        "@platforms//os:freebsd",
     ],
-    toolchain = ":cc-compiler-illumos",
+    toolchain = ":cc-compiler-freebsd",
     toolchain_type = "@rules_cc//cc:toolchain_type",
 )
 

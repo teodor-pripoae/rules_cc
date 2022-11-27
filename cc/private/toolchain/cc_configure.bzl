@@ -114,6 +114,14 @@ def cc_autoconf_impl(repository_ctx, overriden_tools = dict()):
         # skipping until we have proper tests for FreeBSD.
         repository_ctx.symlink(paths["@rules_cc//cc/private/toolchain:freebsd_cc_toolchain_config.bzl"], "cc_toolchain_config.bzl")
         repository_ctx.symlink(paths["@rules_cc//cc/private/toolchain:BUILD.static.freebsd"], "BUILD")
+    elif cpu_value == "illumos":
+        paths = resolve_labels(repository_ctx, [
+            "@rules_cc//cc/private/toolchain:BUILD.static.illumos",
+            "@rules_cc//cc/private/toolchain:illumos_cc_toolchain_config.bzl",
+        ])
+
+        repository_ctx.symlink(paths["@rules_cc//cc/private/toolchain:illumos_cc_toolchain_config.bzl"], "cc_toolchain_config.bzl")
+        repository_ctx.symlink(paths["@rules_cc//cc/private/toolchain:BUILD.static.illumos"], "BUILD")
     elif cpu_value == "x64_windows":
         # TODO(ibiryukov): overriden_tools are only supported in configure_unix_toolchain.
         # We might want to add that to Windows too(at least for msys toolchain).
