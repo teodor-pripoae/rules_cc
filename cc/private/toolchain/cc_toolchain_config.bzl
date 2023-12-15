@@ -98,8 +98,8 @@ def _impl(ctx):
         toolchain_identifier = "local_darwin"
     elif (ctx.attr.cpu == "freebsd"):
         toolchain_identifier = "local_freebsd"
-    elif (ctx.attr.cpu == "illumos"):
-        toolchain_identifier = "local_illumos"
+    elif (ctx.attr.cpu == "solaris"):
+        toolchain_identifier = "local_solaris"
     elif (ctx.attr.cpu == "local"):
         toolchain_identifier = "local_linux"
     elif (ctx.attr.cpu == "x64_windows" and ctx.attr.compiler == "windows_clang"):
@@ -121,7 +121,7 @@ def _impl(ctx):
         host_system_name = "armeabi-v7a"
     elif (ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows" or
           ctx.attr.cpu == "x64_windows_msvc"):
@@ -133,7 +133,7 @@ def _impl(ctx):
         target_system_name = "armeabi-v7a"
     elif (ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows" or
           ctx.attr.cpu == "x64_windows_msvc"):
@@ -147,8 +147,8 @@ def _impl(ctx):
         target_cpu = "darwin"
     elif (ctx.attr.cpu == "freebsd"):
         target_cpu = "freebsd"
-    elif (ctx.attr.cpu == "illumos"):
-        target_cpu = "illumos"
+    elif (ctx.attr.cpu == "solaris"):
+        target_cpu = "solaris"
     elif (ctx.attr.cpu == "local"):
         target_cpu = "local"
     elif (ctx.attr.cpu == "x64_windows"):
@@ -161,7 +161,7 @@ def _impl(ctx):
     if (ctx.attr.cpu == "armeabi-v7a"):
         target_libc = "armeabi-v7a"
     elif (ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows"):
         target_libc = "local"
@@ -177,7 +177,7 @@ def _impl(ctx):
     elif (ctx.attr.cpu == "armeabi-v7a" or
           ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local"):
         compiler = "compiler"
     elif (ctx.attr.cpu == "x64_windows" and ctx.attr.compiler == "windows_clang"):
@@ -195,7 +195,7 @@ def _impl(ctx):
         abi_version = "armeabi-v7a"
     elif (ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows" or
           ctx.attr.cpu == "x64_windows_msvc"):
@@ -207,7 +207,7 @@ def _impl(ctx):
         abi_libc_version = "armeabi-v7a"
     elif (ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows" or
           ctx.attr.cpu == "x64_windows_msvc"):
@@ -228,7 +228,7 @@ def _impl(ctx):
             enabled = True,
             tools = [tool(path = "/usr/bin/objcopy")],
         )
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         objcopy_embed_data_action = action_config(
             action_name = "objcopy_embed_data",
             enabled = True,
@@ -291,7 +291,7 @@ def _impl(ctx):
         action_configs = [c_compile_action, cpp_compile_action]
     elif (ctx.attr.cpu == "darwin" or
           ctx.attr.cpu == "freebsd" or
-          ctx.attr.cpu == "illumos" or
+          ctx.attr.cpu == "solaris" or
           ctx.attr.cpu == "local" or
           ctx.attr.cpu == "x64_windows"):
         action_configs = [objcopy_embed_data_action]
@@ -391,7 +391,7 @@ def _impl(ctx):
                 ),
             ],
         )
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         default_link_flags_feature = feature(
             name = "default_link_flags",
             enabled = True,
@@ -511,7 +511,7 @@ def _impl(ctx):
                 ),
             ],
         )
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         unfiltered_compile_flags_feature = feature(
             name = "unfiltered_compile_flags",
             enabled = True,
@@ -533,7 +533,7 @@ def _impl(ctx):
                         flag_group(
                             flags = [
                                 # Identify as Illumos.
-                                "-D__illumos__",
+                                "-D__solaris__",
                                 "-no-canonical-prefixes",
                                 "-fno-canonical-system-headers",
                                 "-Wno-builtin-macro-redefined",
@@ -869,7 +869,7 @@ def _impl(ctx):
                 ),
             ],
         )
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         default_compile_flags_feature = feature(
             name = "default_compile_flags",
             enabled = True,
@@ -1127,7 +1127,7 @@ def _impl(ctx):
     user_compile_flags_feature = None
     if (ctx.attr.cpu == "darwin" or
         ctx.attr.cpu == "freebsd" or
-        ctx.attr.cpu == "illumos" or
+        ctx.attr.cpu == "solaris" or
         ctx.attr.cpu == "local"):
         user_compile_flags_feature = feature(
             name = "user_compile_flags",
@@ -1184,7 +1184,7 @@ def _impl(ctx):
     sysroot_feature = None
     if (ctx.attr.cpu == "darwin" or
         ctx.attr.cpu == "freebsd" or
-        ctx.attr.cpu == "illumos" or
+        ctx.attr.cpu == "solaris" or
         ctx.attr.cpu == "local"):
         sysroot_feature = feature(
             name = "sysroot",
@@ -1341,7 +1341,7 @@ def _impl(ctx):
             sysroot_feature,
             unfiltered_compile_flags_feature,
         ]
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         features = [
             default_compile_flags_feature,
             default_link_flags_feature,
@@ -1401,7 +1401,7 @@ def _impl(ctx):
         cxx_builtin_include_directories = ["/"]
     elif (ctx.attr.cpu == "freebsd"):
         cxx_builtin_include_directories = ["/usr/lib/clang", "/usr/local/include", "/usr/include"]
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         # Paths obtained with '/opt/local/gcc9/bin/g++ -E -x c++ - -v < /dev/null'.
         cxx_builtin_include_directories = ["/opt/local/gcc9/include/c++/9.3.0","/opt/local/gcc9/include/c++/9.3.0/x86_64-sun-solaris2.11","/opt/local/gcc9/include/c++/9.3.0/backward","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include","/opt/local/include","/opt/local/gcc9/include","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include-fixed","/usr/include"]
     elif (ctx.attr.cpu == "local" or
@@ -1503,7 +1503,7 @@ def _impl(ctx):
             tool_path(name = "objdump", path = "/usr/bin/objdump"),
             tool_path(name = "strip", path = "/usr/bin/strip"),
         ]
-    elif (ctx.attr.cpu == "illumos"):
+    elif (ctx.attr.cpu == "solaris"):
         tool_paths = [
             # Illumos ar doesn't have the '-D' flag which GNU ar has.
             tool_path(name = "ar", path = "/opt/local/bin/ar"),

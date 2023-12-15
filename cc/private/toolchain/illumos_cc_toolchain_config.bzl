@@ -56,7 +56,7 @@ all_link_actions = [
 
 def _impl(ctx):
     cpu = ctx.attr.cpu
-    is_illumos = cpu == "illumos"
+    is_solaris = cpu == "solaris"
     compiler = "compiler"
     toolchain_identifier = "local_{}".format(cpu)
     host_system_name = "local"
@@ -71,7 +71,7 @@ def _impl(ctx):
         tools = [tool(path = "/opt/local/bin/objcopy")],
     )
 
-    action_configs = [objcopy_embed_data_action] if is_illumos else []
+    action_configs = [objcopy_embed_data_action] if is_solaris else []
 
     default_link_flags_feature = feature(
         name = "default_link_flags",
@@ -125,7 +125,7 @@ def _impl(ctx):
                     flag_group(
                         flags = [
                             # Identify as Illumos.
-                            "-D__illumos__",
+                            "-D__solaris__",
                             "-no-canonical-prefixes",
                             "-fno-canonical-system-headers",
                             "-Wno-builtin-macro-redefined",
@@ -247,7 +247,7 @@ def _impl(ctx):
         ],
     )
 
-    if is_illumos:
+    if is_solaris:
         features = [
             default_compile_flags_feature,
             default_link_flags_feature,
@@ -263,13 +263,13 @@ def _impl(ctx):
     else:
         features = [supports_dynamic_linker_feature, supports_pic_feature]
 
-    if (is_illumos):
+    if (is_solaris):
         # Paths obtained with '/opt/local/gcc9/bin/g++ -E -x c++ - -v < /dev/null'.
         cxx_builtin_include_directories = ["/opt/local/gcc9/include/c++/9.3.0","/opt/local/gcc9/include/c++/9.3.0/x86_64-sun-solaris2.11","/opt/local/gcc9/include/c++/9.3.0/backward","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include","/opt/local/include","/opt/local/gcc9/include","/opt/local/gcc9/lib/gcc/x86_64-sun-solaris2.11/9.3.0/include-fixed","/usr/include"]
     else:
         cxx_builtin_include_directories = []
 
-    if is_illumos:
+    if is_solaris:
         tool_paths = [
             # Illumos ar doesn't have the '-D' flag which GNU ar has.
             tool_path(name = "ar", path = "/opt/local/bin/ar"),

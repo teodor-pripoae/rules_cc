@@ -34,13 +34,13 @@ cc_toolchain_suite(
     toolchains = {
         "armeabi-v7a": ":cc-compiler-armeabi-v7a",
         "armeabi-v7a|compiler": ":cc-compiler-armeabi-v7a",
-        "illumos": ":cc-compiler-illumos",
-        "illumos|compiler": ":cc-compiler-illumos",
+        "solaris": ":cc-compiler-solaris",
+        "solaris|compiler": ":cc-compiler-solaris",
     },
 )
 
 cc_toolchain(
-    name = "cc-compiler-illumos",
+    name = "cc-compiler-solaris",
     all_files = ":empty",
     ar_files = ":empty",
     as_files = ":empty",
@@ -50,26 +50,26 @@ cc_toolchain(
     objcopy_files = ":empty",
     strip_files = ":empty",
     supports_param_files = 0,
-    toolchain_config = ":local_illumos",
-    toolchain_identifier = "local_illumos",
+    toolchain_config = ":local_solaris",
+    toolchain_identifier = "local_solaris",
 )
 
 cc_toolchain_config(
-    name = "local_illumos",
-    cpu = "illumos",
+    name = "local_solaris",
+    cpu = "solaris",
 )
 
 toolchain(
-    name = "cc-toolchain-illumos",
+    name = "cc-toolchain-solaris",
     exec_compatible_with = [
         "@platforms//cpu:x86_64",
-        "@platforms//os:illumos",
+        "@platforms//os:solaris",
     ],
     target_compatible_with = [
         "@platforms//cpu:x86_64",
-        "@platforms//os:illumos",
+        "@platforms//os:solaris",
     ],
-    toolchain = ":cc-compiler-illumos",
+    toolchain = ":cc-compiler-solaris",
     toolchain_type = "@rules_cc//cc:toolchain_type",
 )
 
